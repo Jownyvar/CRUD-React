@@ -1,6 +1,7 @@
 import { createUserWithEmailAndPassword, signInWithPopup } from "firebase/auth";
 import { useState } from "react";
 import { auth, googleAuth } from "../lib/firebase";
+import { signOut } from "firebase/auth";
 
 const Register = () => {
   const [email, setEmail] = useState("");
@@ -21,6 +22,16 @@ const Register = () => {
       console.log(error);
     }
   };
+
+
+  const unsub = async () => {
+    try {
+        await signOut(auth); 
+    } catch (error) {
+        console.log(error)
+    }
+  }
+  console.log(auth?.currentUser?.email);
 
   return (
     <>
@@ -46,6 +57,7 @@ const Register = () => {
           <p>or register with</p>
         </form>
         <button onClick={registerGoogle}>Google</button>
+        <button onClick={unsub}>Sign Out</button>
       </div>
     </>
   );
