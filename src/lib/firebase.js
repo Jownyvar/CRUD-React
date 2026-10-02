@@ -17,7 +17,8 @@ const firebaseConfig = {
   storageBucket: "delete-agad.firebasestorage.app",
   messagingSenderId: "1048040657042",
   appId: "1:1048040657042:web:f23db1df7f9c988320164b",
-  measurementId: "G-HMMS0YYSBM"
+  measurementId: "G-HMMS0YYSBM",
+  databaseURL: "https://delete-agad-default-rtdb.asia-southeast1.firebasedatabase.app"
 };
 
 // Initialize Firebase
