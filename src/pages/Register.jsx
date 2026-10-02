@@ -7,7 +7,11 @@ const Register = () => {
   const [password, setPassword] = useState("");
 
   const signIn = async () => {
-    await createUserWithEmailAndPassword(auth, email, password);
+    try {
+      await createUserWithEmailAndPassword(auth, email, password);
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   return (
