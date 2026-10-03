@@ -10,8 +10,8 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 
 const Home = () => {
-  const [pokeName, setPokeName] = useState("");
-  const [pokeType, setPokeType] = useState("");
+  // const [pokeName, setPokeName] = useState("");
+  // const [pokeType, setPokeType] = useState("");
   const [pokemon, setPokemon] = useState([]);
   useEffect(() => {
     getPokemon((data) => {
@@ -61,6 +61,12 @@ const Home = () => {
     reset();
   }
 
+  function editPokemon(data, id) {
+    updatePokemon(id, data.name, data.type);
+    console.log(data);
+    reset();
+  }
+
   return (
     <>
       <form onSubmit={handleSubmit(submitForm)}>
@@ -95,9 +101,7 @@ const Home = () => {
                 <div className="bottom-inner-card"></div>
                 <button
                   className="edit-btn"
-                  onClick={() => {
-                    updatePokemon(poke.id, pokeName, pokeType);
-                  }}
+                  onClick={handleSubmit((data) => editPokemon(data, poke.id))}
                 >
                   Update
                 </button>
