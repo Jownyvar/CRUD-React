@@ -2,10 +2,12 @@ import { signOut } from "firebase/auth";
 import { auth } from "../lib/firebase";
 import { addPokemon, getPokemon } from "../services/pokemon.service";
 import { useState, useEffect, Fragment } from "react";
-import Card from "../components/card";
 import "../components/card.css";
 import { deletePokemon } from "../services/pokemon.service";
 import { updatePokemon } from "../services/pokemon.service";
+import { z } from "zod";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { useForm } from "react-hook-form";
 
 const Home = () => {
   const [pokeName, setPokeName] = useState("");
@@ -39,27 +41,54 @@ const Home = () => {
       </>
     );
   }
+
+  const fieldSchema = z.object({
+    name: z.string().min(2, "Cannot be blank"),
+    type: z.string().min(2, "Type cannot be blank"),
+  });
+
+  const {
+    register,
+    handleSubmit,
+    reset,
+    formState: { errors },
+  } = useForm({
+    resolver: zodResolver(fieldSchema),
+    defaultValues: {
+      name: "Pokemon Name",
+      type: "Pokemon Type",
+    },
+  });
+
+  function submitForm(data) {
+    reset();
+  }
+
   return (
     <>
       <div>This is a home page</div>
-      <form action="">
+      <form onSubmit={handleSubmit(submitForm)}>
         <label htmlFor="pokemon">Pokemon Name</label>
         <br />
         <input
           type="text"
           id="pokemon"
-          onChange={(e) => setPokeName(e.target.value)}
+          {...register("name")}
         />
+        {errors && <p>{errors?.name?.message}</p>}
         <br />
         <label htmlFor="type">Pokemon Type</label>
         <br />
         <input
           type="text"
           id="type"
-          onChange={(e) => setPokeType(e.target.value)}
+          {...register("type")}
         />
+
         <br />
-        <button type="button" onClick={() => newPokemon(pokeName, pokeType)}>
+        <button
+        onClick={() => newPokemon(pokeName, pokeType)}
+        >
           Add to pokedex
         </button>
       </form>
