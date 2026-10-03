@@ -1,4 +1,4 @@
-import { ref, push, orderByChild } from "firebase/database";
+import { ref, push, orderByChild, remove, update } from "firebase/database";
 import { db } from "../lib/firebase";
 import { query } from "firebase/database";
 import { equalTo } from "firebase/database";
@@ -57,18 +57,24 @@ export const getPokemon = (callback) => {
     });
 };
 
-export const updatePokemon = () => {
+export const updatePokemon = async (id, name, type) => {
     try {
-
+        const pokemonUpdateRef = ref(db, `Pokemon/${id}`);
+        const updatePokemon = await update(pokemonUpdateRef, {name, type});
+        return updatePokemon;
     } catch (error) {
         console.log(error);
     }
 }
 
-export const deletePokemon = () => {
+export const deletePokemon = async (id) => {
     try {
-
+        const pokemonUpdateRef = ref(db, `Pokemon/${id}`)
+        const deletedPokemon = await remove(pokemonUpdateRef, id);
+        return deletedPokemon;
     } catch (error) {
         console.log(error);
     }
 }
+
+

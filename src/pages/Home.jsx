@@ -1,7 +1,12 @@
 import { signOut } from "firebase/auth";
 import { auth } from "../lib/firebase";
 import { addPokemon, getPokemon } from "../services/pokemon.service";
-import { useState, useEffect } from "react";
+import { useState, useEffect, Fragment } from "react";
+import Card from "../components/card";
+import "../components/card.css";
+import { deletePokemon } from "../services/pokemon.service";
+import { updatePokemon } from "../services/pokemon.service";
+
 const Home = () => {
   const [pokeName, setPokeName] = useState("");
   const [pokeType, setPokeType] = useState("");
@@ -27,8 +32,12 @@ const Home = () => {
     }
   };
 
-  if(!pokemon){
-    return <><p>Loading.</p></>
+  if (!pokemon) {
+    return (
+      <>
+        <p>Loading.</p>
+      </>
+    );
   }
   return (
     <>
@@ -58,15 +67,44 @@ const Home = () => {
 
       <h2>Pokémon List</h2>
 
-      <ul>
+      <div
+        className="container"
+        style={{ display: "flex", flexDirection: "row", gap: "15px" }}
+      >
         {pokemon.map((poke) => (
-          <li key={poke.id}>
-            {poke.name} - {poke.type}
-          </li>
+          <Fragment key={poke.id}>
+            <div className="outer-card">
+              <div className="inner-card">
+                <div className="top-inner-card">
+                  <p>{poke.name}</p>
+                  <p>{poke.type}</p>
+                </div>
+                <div className="bottom-inner-card"></div>
+                <button
+                  className="edit-btn"
+                  onClick={() => {
+                    updatePokemon(poke.id, pokeName, pokeType);
+                  }}
+                >
+                  Update
+                </button>
+                <button
+                  onClick={() => {
+                    deletePokemon(poke.id);
+                  }}
+                  className="del-btn"
+                >
+                  Delete
+                </button>
+              </div>
+            </div>
+          </Fragment>
         ))}
-      </ul>
+      </div>
 
-      <button onClick={logOut}>Log Out</button>
+      <button onClick={logOut} style={{ margin: "20px 0px" }}>
+        Log Out
+      </button>
     </>
   );
 };
