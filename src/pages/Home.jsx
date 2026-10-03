@@ -3,6 +3,7 @@ import { auth } from "../lib/firebase";
 import { addPokemon, getPokemon } from "../services/pokemon.service";
 import { useState, useEffect, Fragment } from "react";
 import "../components/card.css";
+import "./Home.css";
 import { deletePokemon } from "../services/pokemon.service";
 import { updatePokemon } from "../services/pokemon.service";
 import { z } from "zod";
@@ -43,8 +44,8 @@ const Home = () => {
   }
 
   const fieldSchema = z.object({
-    name: z.string().min(2, "Cannot be blank"),
-    type: z.string().min(2, "Type cannot be blank"),
+    name: z.string().min(2, "Please enter a pokemon name"),
+    type: z.string().min(2, "Pokemon Type cannot be blank"),
   });
 
   const {
@@ -69,20 +70,19 @@ const Home = () => {
 
   return (
     <>
-      <form onSubmit={handleSubmit(submitForm)}>
+      <form className="pokemon-form" onSubmit={handleSubmit(submitForm)}>
         <label htmlFor="pokemon">Pokemon Name</label>
-        <br />
         <input type="text" id="pokemon" {...register("name")} />
         {errors && <p style={{ color: "red" }}>{errors?.name?.message}</p>}
         <br />
         <label htmlFor="type">Pokemon Type</label>
-        <br />
         <input type="text" id="type" {...register("type")} />
         {errors && <p style={{ color: "red" }}>{errors?.type?.message}</p>}
         <br />
-        <button>Add to Pokedex</button>
+        <button className="btn-add">
+          <span>+</span> Add to Pokedex
+        </button>
       </form>
-      <button onClick={logOut}>Log Out</button>
 
       <h2>Pokémon List</h2>
 

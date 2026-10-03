@@ -60,7 +60,7 @@ export const getPokemon = (callback) => {
 export const updatePokemon = async (id, name, type) => {
     try {
         const pokemonUpdateRef = ref(db, `Pokemon/${id}`);
-        const updatePokemon = await update(pokemonUpdateRef, {name, type});
+        const updatePokemon = await update(pokemonUpdateRef, { name, type });
         return updatePokemon;
     } catch (error) {
         console.log(error);

@@ -1,0 +1,24 @@
+.pokemon-form {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.pokemon-form > input {
+    padding: 5px;
+}
+.btn-add {
+  display: flex;
+  justify-content: center;
+  background-color: green;
+  color: white;
+  padding: 10px;
+  outline: none;
+  border: 1px solid black;
+  cursor: pointer;
+}
+
+.btn-add > span {
+  font-size: 15px;
+  font-weight: bolder;
+}
