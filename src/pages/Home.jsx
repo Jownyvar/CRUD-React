@@ -1,11 +1,16 @@
 import { signOut } from "firebase/auth";
 import { auth } from "../lib/firebase";
-import { addPokemon } from "../services/pokemon.service";
-import { useState } from "react";
+import { addPokemon, getPokemon } from "../services/pokemon.service";
+import { useState, useEffect } from "react";
 const Home = () => {
   const [pokeName, setPokeName] = useState("");
   const [pokeType, setPokeType] = useState("");
-
+  const [pokemon, setPokemon] = useState([]);
+  useEffect(() => {
+    getPokemon((data) => {
+      setPokemon(data);
+    });
+  }, []);
   const logOut = () => {
     try {
       signOut(auth);
@@ -21,6 +26,10 @@ const Home = () => {
       console.log(error);
     }
   };
+
+  if(!pokemon){
+    return <><p>Loading.</p></>
+  }
   return (
     <>
       <div>This is a home page</div>
@@ -45,6 +54,18 @@ const Home = () => {
           Add to pokedex
         </button>
       </form>
+      <button onClick={logOut}>Log Out</button>
+
+      <h2>Pokémon List</h2>
+
+      <ul>
+        {pokemon.map((poke) => (
+          <li key={poke.id}>
+            {poke.name} - {poke.type}
+          </li>
+        ))}
+      </ul>
+
       <button onClick={logOut}>Log Out</button>
     </>
   );
