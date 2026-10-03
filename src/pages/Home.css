@@ -5,7 +5,7 @@
 }
 
 .pokemon-form > input {
-    padding: 5px;
+  padding: 5px;
 }
 .btn-add {
   display: flex;
@@ -21,4 +21,11 @@
 .btn-add > span {
   font-size: 15px;
   font-weight: bolder;
+}
+
+.container {
+  display: grid;
+  grid-template-columns: auto auto auto auto;
+  justify-content: center;
+  gap: 10px;
 }

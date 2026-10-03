@@ -44,8 +44,8 @@ const Home = () => {
   }
 
   const fieldSchema = z.object({
-    name: z.string().min(2, "Please enter a pokemon name"),
-    type: z.string().min(2, "Pokemon Type cannot be blank"),
+    name: z.string().min(2, "Please enter a pokémon name"),
+    type: z.string().min(2, "Pokémon Type cannot be blank"),
   });
 
   const {
@@ -71,25 +71,22 @@ const Home = () => {
   return (
     <>
       <form className="pokemon-form" onSubmit={handleSubmit(submitForm)}>
-        <label htmlFor="pokemon">Pokemon Name</label>
+        <label htmlFor="pokemon">Pokémon Name</label>
         <input type="text" id="pokemon" {...register("name")} />
         {errors && <p style={{ color: "red" }}>{errors?.name?.message}</p>}
         <br />
-        <label htmlFor="type">Pokemon Type</label>
+        <label htmlFor="type">Pokémon Type</label>
         <input type="text" id="type" {...register("type")} />
         {errors && <p style={{ color: "red" }}>{errors?.type?.message}</p>}
         <br />
         <button className="btn-add">
-          <span>+</span> Add to Pokedex
+          <span>+</span> Add to Pokédex
         </button>
       </form>
 
       <h2>Pokémon List</h2>
 
-      <div
-        className="container"
-        style={{ display: "flex", flexDirection: "row", gap: "15px" }}
-      >
+      <div className="container">
         {pokemon.map((poke) => (
           <Fragment key={poke.id}>
             <div className="outer-card">
