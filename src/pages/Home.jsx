@@ -54,43 +54,27 @@ const Home = () => {
     formState: { errors },
   } = useForm({
     resolver: zodResolver(fieldSchema),
-    defaultValues: {
-      name: "Pokemon Name",
-      type: "Pokemon Type",
-    },
   });
 
   function submitForm(data) {
+    newPokemon(data.name, data.type);
     reset();
   }
 
   return (
     <>
-      <div>This is a home page</div>
       <form onSubmit={handleSubmit(submitForm)}>
         <label htmlFor="pokemon">Pokemon Name</label>
         <br />
-        <input
-          type="text"
-          id="pokemon"
-          {...register("name")}
-        />
-        {errors && <p>{errors?.name?.message}</p>}
+        <input type="text" id="pokemon" {...register("name")} />
+        {errors && <p style={{ color: "red" }}>{errors?.name?.message}</p>}
         <br />
         <label htmlFor="type">Pokemon Type</label>
         <br />
-        <input
-          type="text"
-          id="type"
-          {...register("type")}
-        />
-
+        <input type="text" id="type" {...register("type")} />
+        {errors && <p style={{ color: "red" }}>{errors?.type?.message}</p>}
         <br />
-        <button
-        onClick={() => newPokemon(pokeName, pokeType)}
-        >
-          Add to pokedex
-        </button>
+        <button>Add to Pokedex</button>
       </form>
       <button onClick={logOut}>Log Out</button>
 
